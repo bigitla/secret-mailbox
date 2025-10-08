@@ -44,6 +44,11 @@
       border: 1px solid #444;
       border-radius: 5px;
     }
+    .timestamp {
+      margin-bottom: 0.5em;
+      font-weight: bold;
+      display: block;
+    }
     #veil {
       font-style: italic;
       color: #aaa;
@@ -122,7 +127,7 @@
           const originalText = bytes.toString(CryptoJS.enc.Utf8);
           if (originalText) {
             decryptedAny = true;
-            output += `<div class="message"><strong>${time}</strong><br>${originalText}</div>`;
+            output += `<div class="message"><span class="timestamp">${time}</span>${originalText}</div>`;
           }
         } catch {
           // silently skip undecryptable messages
@@ -135,6 +140,3 @@
   </script>
 </body>
 </html>
-
-
-
