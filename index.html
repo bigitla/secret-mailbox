@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secret Mailbox</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2em; background: #f9f9f9; }
+    textarea, input { width: 100%; margin-top: 1em; padding: 0.5em; }
+    button { margin-top: 1em; padding: 0.5em 1em; }
+    .message { background: #fff; padding: 1em; margin-top: 1em; border: 1px solid #ccc; }
+    #veil { font-style: italic; color: #666; margin-top: 2em; }
+    img.squirrel { width: 100%; max-width: 300px; margin-top: 2em; display: block; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+  <h2>🌸 Secret Mailbox</h2>
+
+  <label>Keyword (shared secret):</label>
+  <input type="password" id="keyword">
+
+  <label>Your message:</label>
+  <textarea id="messageInput" rows="4"></textarea>
+  <button onclick="saveToServer()">📩 Drop Message</button>
+
+  <button onclick="loadMessages()">📬 Check Mailbox</button>
+
+  <img src="https://copilot.microsoft.com/th/id/BCO.9737071e-7fe4-4431-a1bc-a52780577f7d.png" alt="Cute squirrel with envelope" class="squirrel">
+
+  <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
+  <div id="output"></div>
+
+  <script>
+    async function saveToServer() {
+      const keyword = document.getElementById('keyword').value;
+      const message = document.getElementById('messageInput').value;
+      if (!keyword || !message) return alert("Please enter both keyword and message.");
+
+      const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
+
+      await fetch('/mailbox', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: ciphertext })
+      });
+
+      alert("Message saved.");
+      document.getElementById('messageInput').value = '';
+    }
+
+    async function loadMessages() {
+      const keyword = document.getElementById('keyword').value;
+      const res = await fetch('/mailbox');
+      const data = await res.json();
+
+      let output = '';
+      let decryptedAny = false;
+      data.forEach((msg, i) => {
+        try {
+          const bytes = CryptoJS.AES.decrypt(msg, keyword);
+          const originalText = bytes.toString(CryptoJS.enc.Utf8);
+          if (originalText) {
+            decryptedAny = true;
+            output += `<div class="message"><strong>Message ${i + 1}:</strong><br>${originalText}</div>`;
+          } else {
+            output += `<div class="message">Message ${i + 1}: 🔒 Unable to decrypt</div>`;
+          }
+        } catch {
+          output += `<div class="message">Message ${i + 1}: 🔒 Unable to decrypt</div>`;
+        }
+      });
+
+      document.getElementById('output').innerHTML = output;
+      document.getElementById('veil').style.display = decryptedAny ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
