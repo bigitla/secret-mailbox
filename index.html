@@ -59,7 +59,6 @@
       margin-right: auto;
     }
 
-    /* 📱 Mobile tweaks */
     @media (max-width: 480px) {
       body {
         padding: 1em;
@@ -95,11 +94,12 @@
       if (!keyword || !message) return alert("Please enter both keyword and message.");
 
       const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
+      const timestamp = new Date().toISOString();
 
       await fetch('/mailbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: ciphertext })
+        body: JSON.stringify({ message: ciphertext, timestamp })
       });
 
       alert("Message saved.");
@@ -114,18 +114,19 @@
       let output = '';
       let decryptedAny = false;
 
-      data.slice().reverse().forEach((msg, i) => {
+      data.slice().reverse().forEach((msgObj) => {
+        const msg = msgObj.message || msgObj;
+        const time = msgObj.timestamp ? new Date(msgObj.timestamp).toLocaleString() : '🕰️';
+
         try {
           const bytes = CryptoJS.AES.decrypt(msg, keyword);
           const originalText = bytes.toString(CryptoJS.enc.Utf8);
           if (originalText) {
             decryptedAny = true;
-            output += `<div class="message"><strong>Message ${i + 1}:</strong><br>${originalText}</div>`;
-          } else {
-            output += `<div class="message">Message ${i + 1}: 🔒 Unable to decrypt</div>`;
+            output += `<div class="message"><strong>${time}</strong><br>${originalText}</div>`;
           }
         } catch {
-          output += `<div class="message">Message ${i + 1}: 🔒 Unable to decrypt</div>`;
+          // silently skip undecryptable messages
         }
       });
 
@@ -135,5 +136,3 @@
   </script>
 </body>
 </html>
-
-
