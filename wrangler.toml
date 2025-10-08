@@ -3,4 +3,4 @@ compatibility_date = "2025-10-08"
 
 [[kv_namespaces]]
 binding = "MAILBOX"
-id = "your-kv-namespace-id"
+id = "MAILBOX"
