@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Secret Mailbox</title>
+  <title>Crypto Squirrel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <style>
@@ -72,16 +72,16 @@
   </style>
 </head>
 <body>
-  <h2>🌸 Secret Mailbox</h2>
+  <h2>🌸Crypto Squirrel</h2>
 
-  <label for="keyword">Keyword (shared secret):</label>
+  <label for="keyword">Private Key:</label>
   <input type="password" id="keyword">
 
-  <label for="messageInput">Your message:</label>
+  <label for="messageInput">Message:</label>
   <textarea id="messageInput" rows="4"></textarea>
 
-  <button onclick="saveToServer()">📩 Drop Message</button>
-  <button onclick="loadMessages()">📬 Check Mailbox</button>
+  <button onclick="saveToServer()">📩 Drop</button>
+  <button onclick="loadMessages()">📬 Check</button>
 
   <img src="/squirrel.png" alt="Cute squirrel with envelope" class="squirrel">
 
@@ -135,3 +135,4 @@
   </script>
 </body>
 </html>
+
