@@ -4,12 +4,49 @@
   <title>Secret Mailbox</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2em; background: #f9f9f9; }
-    textarea, input { width: 100%; margin-top: 1em; padding: 0.5em; }
-    button { margin-top: 1em; padding: 0.5em 1em; }
-    .message { background: #fff; padding: 1em; margin-top: 1em; border: 1px solid #ccc; }
-    #veil { font-style: italic; color: #666; margin-top: 2em; }
-    img.squirrel { width: 100%; max-width: 300px; margin-top: 2em; display: block; margin-left: auto; margin-right: auto; }
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 2em;
+      background: #f9f9f9;
+    }
+    textarea, input {
+      width: 100%;
+      margin-top: 1em;
+      padding: 0.5em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      background: #fff;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .message {
+      background: #fff;
+      padding: 1em;
+      margin-top: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    #veil {
+      font-style: italic;
+      color: #666;
+      margin-top: 2em;
+      text-align: center;
+    }
+    img.squirrel {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 2em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
@@ -20,13 +57,16 @@
 
   <label>Your message:</label>
   <textarea id="messageInput" rows="4"></textarea>
-  <button onclick="saveToServer()">📩 Drop Message</button>
 
+  <button onclick="saveToServer()">📩 Drop Message</button>
   <button onclick="loadMessages()">📬 Check Mailbox</button>
 
-  <img src="https://copilot.microsoft.com/th/id/BCO.9737071e-7fe4-4431-a1bc-a52780577f7d.png" alt="Cute squirrel with envelope" class="squirrel">
+  <img src="https://copilot.microsoft.com/th/id/BCO.9737071e-7fe4-4431-a1bc-a52780577f7d.png"
+       alt="Cute squirrel with envelope"
+       class="squirrel">
 
   <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
+
   <div id="output"></div>
 
   <script>
