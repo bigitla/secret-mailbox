@@ -1,6 +1,10 @@
 name = "secret-mailbox"
 compatibility_date = "2025-10-08"
 
+[vars]
+ADMIN_TOKEN = "molodoychelovek"
+
 [[kv_namespaces]]
 binding = "MAILBOX"
 id = "MAILBOX"
+
