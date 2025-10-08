@@ -99,7 +99,8 @@
 
       let output = '';
       let decryptedAny = false;
-      data.forEach((msg, i) => {
+
+      data.slice().reverse().forEach((msg, i) => {
         try {
           const bytes = CryptoJS.AES.decrypt(msg, keyword);
           const originalText = bytes.toString(CryptoJS.enc.Utf8);
