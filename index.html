@@ -4,24 +4,69 @@
   <title>Secret Mailbox</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2em; background: #f9f9f9; }
-    textarea, input { width: 100%; margin-top: 1em; padding: 0.5em; }
-    button { margin-top: 1em; padding: 0.5em 1em; }
-    .message { background: #fff; padding: 1em; margin-top: 1em; border: 1px solid #ccc; }
-    #veil { font-style: italic; color: #666; margin-top: 2em; }
-    img.squirrel { width: 100%; max-width: 300px; margin-top: 2em; display: block; margin-left: auto; margin-right: auto; }
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 2em;
+      background: #000;
+      color: #87CEFA; /* light blue */
+    }
+    textarea, input {
+      width: 100%;
+      margin-top: 1em;
+      padding: 0.5em;
+      background-color: #111;
+      color: #87CEFA;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      background-color: #222;
+      color: #87CEFA;
+      border: 1px solid #444;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+    .message {
+      background: #111;
+      color: #87CEFA;
+      padding: 1em;
+      margin-top: 1em;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+    #veil {
+      font-style: italic;
+      color: #aaa;
+      margin-top: 2em;
+      text-align: center;
+    }
+    img.squirrel {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 2em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
   <h2>🌸 Secret Mailbox</h2>
 
-  <label>Keyword (shared secret):</label>
+  <label for="keyword">Keyword (shared secret):</label>
   <input type="password" id="keyword">
 
-  <label>Your message:</label>
+  <label for="messageInput">Your message:</label>
   <textarea id="messageInput" rows="4"></textarea>
-  <button onclick="saveToServer()">📩 Drop Message</button>
 
+  <button onclick="saveToServer()">📩 Drop Message</button>
   <button onclick="loadMessages()">📬 Check Mailbox</button>
 
   <img src="/squirrel.png" alt="Cute squirrel with envelope" class="squirrel">
