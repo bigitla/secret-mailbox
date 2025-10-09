@@ -203,7 +203,7 @@
       document.getElementById('veil').style.display = decryptedAny ? 'none' : 'block';
 
       const outputContainer = document.getElementById('outputWrapper');
-      outputContainer.classList.toggle('scrollable', data.length > 20);
+      outputContainer.classList.toggle('scrollable', data.length > 10);
     }
 
     function toggleMessage(el) {
@@ -223,3 +223,4 @@
   </script>
 </body>
 </html>
+
