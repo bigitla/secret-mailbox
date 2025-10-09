@@ -111,5 +111,50 @@
 
   <script>
     async function saveToServer() {
-      const keyword = document.getElementById('keyword').
+      const keyword = document.getElementById('keyword').value;
+      const message = document.getElementById('messageInput').value;
+      if (!keyword || !message) return alert("Please enter both keyword and message.");
 
+      const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
+      const timestamp = new Date().toISOString();
+
+      await fetch('/mailbox', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: ciphertext, timestamp })
+      });
+
+      alert("Message saved.");
+      document.getElementById('messageInput').value = '';
+    }
+
+    async function loadMessages() {
+      const keyword = document.getElementById('keyword').value;
+      const res = await fetch('/mailbox');
+      const data = await res.json();
+
+      let output = '';
+      let decryptedAny = false;
+
+      data.slice().reverse().forEach((msgObj) => {
+        const msg = msgObj.message || msgObj;
+        const time = msgObj.timestamp ? new Date(msgObj.timestamp).toLocaleString() : '🕰️';
+
+        try {
+          const bytes = CryptoJS.AES.decrypt(msg, keyword);
+          const originalText = bytes.toString(CryptoJS.enc.Utf8);
+          if (originalText) {
+            decryptedAny = true;
+            output += `<div class="message"><span class="timestamp">${time}</span>${originalText}</div>`;
+          }
+        } catch {
+          // silently skip undecryptable messages
+        }
+      });
+
+      document.getElementById('output').innerHTML = output;
+      document.getElementById('veil').style.display = decryptedAny ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
