@@ -21,7 +21,7 @@
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6); /* soft veil */
+      background: rgba(0, 0, 0, 0.6);
       z-index: -1;
     }
 
@@ -58,12 +58,25 @@
       margin-top: 1em;
       border: 1px solid #444;
       border-radius: 5px;
+      cursor: pointer;
     }
 
     .timestamp {
       margin-bottom: 0.5em;
       font-weight: bold;
       display: block;
+    }
+
+    .preview {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .full {
+      white-space: pre-wrap;
+      margin-top: 0.5em;
+      display: none;
     }
 
     #veil {
@@ -80,7 +93,7 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
-      background-color: transparent; /* fallback for Chrome */
+      background-color: transparent;
     }
 
     @media (max-width: 480px) {
@@ -126,7 +139,7 @@
       });
 
       document.getElementById('messageInput').value = '';
-      loadMessages(); // 🧙‍♂️ Auto-refresh after drop
+      loadMessages();
     }
 
     async function loadMessages() {
@@ -146,7 +159,14 @@
           const originalText = bytes.toString(CryptoJS.enc.Utf8);
           if (originalText) {
             decryptedAny = true;
-            output += `<div class="message"><span class="timestamp">${time}</span>${originalText}</div>`;
+            const firstLine = originalText.split('\n')[0];
+            output += `
+              <div class="message" onclick="toggleMessage(this)">
+                <span class="timestamp">${time}</span>
+                <div class="preview">${firstLine}</div>
+                <div class="full">${originalText}</div>
+              </div>
+            `;
           }
         } catch {
           // silently skip undecryptable messages
@@ -155,6 +175,19 @@
 
       document.getElementById('output').innerHTML = output;
       document.getElementById('veil').style.display = decryptedAny ? 'none' : 'block';
+    }
+
+    function toggleMessage(el) {
+      const preview = el.querySelector('.preview');
+      const full = el.querySelector('.full');
+
+      if (full.style.display === 'none') {
+        preview.style.display = 'none';
+        full.style.display = 'block';
+      } else {
+        preview.style.display = 'block';
+        full.style.display = 'none';
+      }
     }
   </script>
 </body>
