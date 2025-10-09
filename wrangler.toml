@@ -8,3 +8,6 @@ ADMIN_TOKEN = "molodoychelovek"
 binding = "MAILBOX"
 id = "MAILBOX"
 
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "RATE_LIMIT"
