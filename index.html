@@ -74,13 +74,13 @@
     }
 
     img.squirrel {
-      background-color: transparent;
       width: 100%;
       max-width: 300px;
       margin-top: 2em;
       display: block;
       margin-left: auto;
       margin-right: auto;
+      background-color: transparent; /* fallback for Chrome */
     }
 
     @media (max-width: 480px) {
@@ -125,8 +125,8 @@
         body: JSON.stringify({ message: ciphertext, timestamp })
       });
 
-      alert("Message saved.");
       document.getElementById('messageInput').value = '';
+      loadMessages(); // 🧙‍♂️ Auto-refresh after drop
     }
 
     async function loadMessages() {
@@ -159,4 +159,3 @@
   </script>
 </body>
 </html>
-
