@@ -96,6 +96,29 @@
       background-color: transparent;
     }
 
+    #outputWrapper {
+      max-height: none;
+      overflow-y: visible;
+      position: relative;
+    }
+
+    #outputWrapper.scrollable {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 0.5em;
+    }
+
+    #outputWrapper.scrollable::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+      pointer-events: none;
+    }
+
     @media (max-width: 480px) {
       body {
         padding: 1em;
@@ -121,7 +144,10 @@
   <img src="/squirrel.png" alt="Cute squirrel with envelope" class="squirrel">
 
   <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
-  <div id="output"></div>
+
+  <div id="outputWrapper">
+    <div id="output"></div>
+  </div>
 
   <script>
     async function saveToServer() {
@@ -175,6 +201,9 @@
 
       document.getElementById('output').innerHTML = output;
       document.getElementById('veil').style.display = decryptedAny ? 'none' : 'block';
+
+      const outputContainer = document.getElementById('outputWrapper');
+      outputContainer.classList.toggle('scrollable', data.length > 20);
     }
 
     function toggleMessage(el) {
