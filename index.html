@@ -181,7 +181,9 @@
       const preview = el.querySelector('.preview');
       const full = el.querySelector('.full');
 
-      if (full.style.display === 'none') {
+      const isHidden = window.getComputedStyle(full).display === 'none';
+
+      if (isHidden) {
         preview.style.display = 'none';
         full.style.display = 'block';
       } else {
