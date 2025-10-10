@@ -17,28 +17,37 @@ export async function onRequest(context) {
       expirationTtl: 60
     });
 
-    const { message, timestamp } = await request.json();
-    const id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString();
+    const { id, message, timestamp } = await request.json();
     const payload = JSON.stringify({ id, message, timestamp });
 
     await kv.put(id, payload);
+
+    // Update index list
+    const indexRaw = await kv.get("messages:index");
+    const index = indexRaw ? JSON.parse(indexRaw) : [];
+    index.push(id);
+    await kv.put("messages:index", JSON.stringify(index));
+
     return new Response(JSON.stringify({ status: "Saved", id }), {
       headers: { 'Content-Type': 'application/json' }
     });
   }
 
   if (request.method === 'GET') {
-    const list = await kv.list();
+    const indexRaw = await kv.get("messages:index");
+    const index = indexRaw ? JSON.parse(indexRaw) : [];
+
     const messages = await Promise.all(
-      list.keys.map(async key => {
-        const raw = await kv.get(key.name);
+      index.map(async id => {
+        const raw = await kv.get(id);
         try {
           return JSON.parse(raw);
         } catch {
-          return { id: key.name, message: raw };
+          return { id, message: raw };
         }
       })
     );
+
     return new Response(JSON.stringify(messages), {
       headers: { 'Content-Type': 'application/json' }
     });
@@ -52,8 +61,12 @@ export async function onRequest(context) {
       return new Response("Unauthorized", { status: 403 });
     }
 
-    const list = await kv.list();
-    await Promise.all(list.keys.map(key => kv.delete(key.name)));
+    const indexRaw = await kv.get("messages:index");
+    const index = indexRaw ? JSON.parse(indexRaw) : [];
+
+    await Promise.all(index.map(id => kv.delete(id)));
+    await kv.delete("messages:index");
+
     return new Response("Mailbox cleared", { status: 200 });
   }
 
