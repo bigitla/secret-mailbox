@@ -91,6 +91,8 @@
 
     .split-button button:hover {
       background-color: #333;
+      box-shadow: 0 0 10px rgba(135, 206, 250, 0.6);
+      transition: all 0.3s ease;
     }
 
     .message {
@@ -136,6 +138,15 @@
       margin-left: auto;
       margin-right: auto;
       background-color: transparent;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards 0.5s;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     /* 🔧 FIX: Constrain message list to same width as inputs/buttons */
@@ -289,4 +300,5 @@
   </script>
 </body>
 </html>
+
 
