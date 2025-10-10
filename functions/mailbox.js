@@ -10,7 +10,7 @@ export async function onRequest(context) {
     const rateKey = `rate:${ip}`;
     const count = await rateKV.get(rateKey);
 
-    if (count && parseInt(count) > 10) {
+    if (count && parseInt(count) > 100) {
       return new Response("Too many requests. Please slow down.", { status: 429 });
     }
 
