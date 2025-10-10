@@ -124,7 +124,9 @@
     }
 
     .full {
-      white-space: pre-wrap;
+      white-space: pre-wrap;   /* preserves line breaks but allows wrapping */
+      word-wrap: break-word;   /* breaks long words if needed */
+      overflow-wrap: anywhere; /* modern property for breaking long strings */
       margin-top: 0.5em;
       display: none;
     }
@@ -309,5 +311,6 @@
   </script>
 </body>
 </html>
+
 
 
