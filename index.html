@@ -103,6 +103,12 @@
       border: 1px solid #444;
       border-radius: 5px;
       cursor: pointer;
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .timestamp {
@@ -128,6 +134,12 @@
       color: #aaa;
       margin-top: 2em;
       text-align: center;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
 
     img.squirrel {
@@ -147,21 +159,16 @@
       to {
         opacity: 1;
         transform: translateY(0);
+      }
     }
 
-    /* 🔧 FIX: Constrain message list to same width as inputs/buttons */
-    #outputWrapper,
-    #output {
-      width: 100%;
-      max-width: 500px;
-      margin: 1em auto 0 auto;
-    }
-
+    /* Messages list inherits same width and is pushed below the fold */
     #outputWrapper {
       max-height: none;
       overflow-y: visible;
       position: relative;
-      margin-top: 200px; /* adjust this value to control how far down it starts */
+      margin-top: 200px; /* keeps it pushed below the fold */
+      width: 100%;
     }
 
     #outputWrapper.scrollable {
@@ -209,14 +216,15 @@
       <button onclick="saveToServer()">📩 Drop</button>
       <button onclick="loadMessages()">📬 Check</button>
     </div>
-  </div>
 
-  <img src="/squirrel.png" alt="Detective squirrel" class="squirrel">
+    <img src="/squirrel.png" alt="Detective squirrel" class="squirrel">
 
-  <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
+    <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
 
-  <div id="outputWrapper">
-    <div id="output"></div>
+    <!-- Messages list inside .layout for consistent width -->
+    <div id="outputWrapper">
+      <div id="output"></div>
+    </div>
   </div>
 
   <script>
@@ -300,5 +308,3 @@
   </script>
 </body>
 </html>
-
-
