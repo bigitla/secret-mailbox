@@ -152,12 +152,19 @@
       color: #ffffff;
     }
 
+    /* VEIL — keep it one single line, centered, without changing layout widths */
     #veil {
       font-style: italic;
       color: #aaa;
-      margin: 1em auto;
       text-align: center;
-      animation: pulse 3s ease-in-out infinite;
+      margin: 1em 0;
+      width: 100%;
+      white-space: nowrap;      /* force single line */
+      overflow: visible;        /* don't clip */
+      text-overflow: clip;      /* no ellipsis */
+      display: block;
+      box-sizing: border-box;
+      pointer-events: none;     /* avoid accidental taps */
     }
 
     @keyframes pulse {
