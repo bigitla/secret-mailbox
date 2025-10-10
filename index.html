@@ -24,6 +24,11 @@
       z-index: -1;
     }
 
+    /* Ensure borders/padding are included in width calculations for perfect alignment */
+    .layout, .layout * {
+      box-sizing: border-box;
+    }
+
     .layout {
       display: flex;
       flex-direction: column;
@@ -42,6 +47,7 @@
     label {
       margin-top: 1em;
       text-align: left;
+      width: 100%;
     }
 
     input, textarea {
@@ -66,6 +72,8 @@
       overflow: hidden;
       box-shadow: 0 0 5px rgba(135, 206, 250, 0.3);
       width: 100%;
+      /* Match input visual boundary to avoid perceived width differences */
+      border: 1px solid #444;
     }
 
     .split-button button {
