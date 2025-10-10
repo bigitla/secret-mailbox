@@ -222,7 +222,10 @@
             const firstLine = originalText.split('\n')[0];
             output += `
               <div class="message" onclick="toggleMessage(this)">
-                <span class="timestamp">${time}</span>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="timestamp">${time}</span>
+                  <span style="font-size: 0.8em; color: #aaa;">ID: ${msgObj.id}</span>
+                </div>
                 <div class="preview">${firstLine}</div>
                 <div class="full">${originalText}</div>
               </div>
@@ -257,3 +260,4 @@
   </script>
 </body>
 </html>
+
