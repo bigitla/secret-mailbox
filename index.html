@@ -146,7 +146,7 @@
       width: 100%;
       max-width: 300px;
       margin-top: 2em;
-      margin-bottom: 4em; /* NEW: pushes veil down into view */
+      margin-bottom: 2em;
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -154,16 +154,6 @@
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1s ease forwards 0.5s;
-    }
-
-#outputWrapper {
-  max-height: none;
-  overflow-y: visible;
-  position: relative;
-  margin-top: 0; /* reset, no need for 200px hack */
-  width: 100%;
-}
-
     }
     
     @keyframes fadeInUp {
@@ -173,12 +163,12 @@
       }
     }
 
-    /* Messages list inherits same width and is pushed below the fold */
+    /* Messages list inherits same width and sits below veil */
     #outputWrapper {
       max-height: none;
       overflow-y: visible;
       position: relative;
-      margin-top: 200px; /* keeps it pushed below the fold */
+      margin-top: 2em;
       width: 100%;
     }
 
@@ -319,5 +309,3 @@
   </script>
 </body>
 </html>
-
-
