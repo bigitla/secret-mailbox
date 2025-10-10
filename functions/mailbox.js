@@ -5,6 +5,7 @@ export async function onRequest(context) {
 
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
 
+  // 📨 Save encrypted message with timestamp (Rate Limited)
   if (request.method === 'POST') {
     const rateKey = `rate:${ip}`;
     const count = await rateKV.get(rateKey);
@@ -14,15 +15,17 @@ export async function onRequest(context) {
     }
 
     await rateKV.put(rateKey, (parseInt(count || "0") + 1).toString(), {
-      expirationTtl: 60
+      expirationTtl: 60 // resets every 60 seconds
     });
 
-    const { id, message, timestamp } = await request.json();
-    const payload = JSON.stringify({ id, message, timestamp, ip });
+    const { message, timestamp } = await request.json();
+    const id = Date.now().toString();
+    const payload = JSON.stringify({ message, timestamp });
     await kv.put(id, payload);
     return new Response("Saved", { status: 200 });
   }
 
+  // 📬 Retrieve all messages
   if (request.method === 'GET') {
     const list = await kv.list();
     const messages = await Promise.all(
@@ -31,7 +34,7 @@ export async function onRequest(context) {
         try {
           return JSON.parse(raw);
         } catch {
-          return { id: key.name, message: raw };
+          return { message: raw };
         }
       })
     );
@@ -40,6 +43,7 @@ export async function onRequest(context) {
     });
   }
 
+  // 🧹 Delete all messages manually (Token Protected)
   if (request.method === 'DELETE') {
     const url = new URL(request.url);
     const token = url.searchParams.get("token");
@@ -53,5 +57,8 @@ export async function onRequest(context) {
     return new Response("Mailbox cleared", { status: 200 });
   }
 
+  // 🚫 Fallback for unsupported methods
   return new Response("Method not allowed", { status: 405 });
 }
+
+
