@@ -5,15 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: sans-serif;
-      margin: auto;
-      padding: 2em 1em;
       background: url('/bg.png') no-repeat center center fixed;
       background-size: cover;
       color: #87CEFA;
       position: relative;
       z-index: 0;
+
+      /* Center content on initial load */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     body::before {
@@ -35,7 +45,7 @@
       justify-content: center;
       max-width: 500px;
       width: 100%;
-      margin: auto;
+      margin: 2em auto;
     }
 
     h2 {
@@ -124,9 +134,9 @@
     }
 
     .full {
-      white-space: pre-wrap;   /* preserves line breaks but allows wrapping */
-      word-wrap: break-word;   /* breaks long words if needed */
-      overflow-wrap: anywhere; /* modern property for breaking long strings */
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
       margin-top: 0.5em;
       display: none;
     }
@@ -134,11 +144,8 @@
     #veil {
       font-style: italic;
       color: #aaa;
-      margin-top: 1em auto;
-      white-space: nowrap;
-      overflow: visible;
+      margin: 1em auto;
       text-align: center;
-      text-overflow: ellipsis;  
       animation: pulse 3s ease-in-out infinite;
     }
 
@@ -235,7 +242,10 @@
     async function saveToServer() {
       const keyword = document.getElementById('keyword').value;
       const message = document.getElementById('messageInput').value;
-      if (!keyword || !message) return alert("Please enter both keyword and message.");
+      if (!keyword || !message) {
+        alert("Please enter both keyword and message.");
+        return;
+      }
 
       const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
       const timestamp = new Date().toISOString();
@@ -311,6 +321,3 @@
   </script>
 </body>
 </html>
-
-
-
