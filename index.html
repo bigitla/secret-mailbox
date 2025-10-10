@@ -190,12 +190,11 @@
 
       const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
       const timestamp = new Date().toISOString();
-      const id = crypto.randomUUID();
 
       await fetch('/mailbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, message: ciphertext, timestamp })
+        body: JSON.stringify({ message: ciphertext, timestamp })
       });
 
       document.getElementById('messageInput').value = '';
@@ -211,7 +210,7 @@
       let decryptedAny = false;
 
       data.slice().reverse().forEach((msgObj) => {
-        const msg = msgObj.message;
+        const msg = msgObj.message || msgObj;
         const time = msgObj.timestamp ? new Date(msgObj.timestamp).toLocaleString() : '🕰️';
 
         try {
@@ -222,10 +221,7 @@
             const firstLine = originalText.split('\n')[0];
             output += `
               <div class="message" onclick="toggleMessage(this)">
-                <div style="display: flex; justify-content: space-between;">
-                  <span class="timestamp">${time}</span>
-                  <span style="font-size: 0.8em; color: #aaa;">ID: ${msgObj.id}</span>
-                </div>
+                <span class="timestamp">${time}</span>
                 <div class="preview">${firstLine}</div>
                 <div class="full">${originalText}</div>
               </div>
@@ -260,4 +256,3 @@
   </script>
 </body>
 </html>
-
