@@ -200,7 +200,6 @@
 
       if (res.ok) {
         document.getElementById('messageInput').value = '';
-        await new Promise(resolve => setTimeout(resolve, 300)); // gentle delay
         loadMessages();
       }
     }
