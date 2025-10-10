@@ -25,18 +25,25 @@
       z-index: -1;
     }
 
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 500px;
+      margin: auto;
+      width: 100%;
+    }
+
     h2 {
       text-align: left;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 500px;
+      width: 100%;
     }
 
     .form-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100%;
     }
 
     .form-wrapper label,
@@ -44,7 +51,6 @@
     .form-wrapper textarea,
     .form-wrapper .button-wrapper {
       width: 100%;
-      max-width: 500px;
     }
 
     textarea, input {
@@ -64,7 +70,6 @@
     .button-wrapper {
       margin-top: 1em;
       width: 100%;
-      max-width: 500px;
     }
 
     .split-button {
@@ -177,18 +182,20 @@
   </style>
 </head>
 <body>
-  <h2>₿ Crypto Squirrel</h2>
+  <div class="container">
+    <h2>₿ Crypto Squirrel</h2>
 
-  <div class="form-wrapper">
-    <label for="keyword">Private Key:</label>
-    <input type="password" id="keyword">
-    <label for="messageInput" style="margin-top: 2em;">Message:</label>
-    <textarea id="messageInput" rows="4"></textarea>
+    <div class="form-wrapper">
+      <label for="keyword">Private Key:</label>
+      <input type="password" id="keyword">
+      <label for="messageInput" style="margin-top: 2em;">Message:</label>
+      <textarea id="messageInput" rows="4"></textarea>
 
-    <div class="button-wrapper">
-      <div class="split-button">
-        <button onclick="saveToServer()">📩 Drop</button>
-        <button onclick="loadMessages()">📬 Check</button>
+      <div class="button-wrapper">
+        <div class="split-button">
+          <button onclick="saveToServer()">📩 Drop</button>
+          <button onclick="loadMessages()">📬 Check</button>
+        </div>
       </div>
     </div>
   </div>
