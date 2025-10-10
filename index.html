@@ -24,7 +24,6 @@
       z-index: -1;
     }
 
-    /* Ensure borders/padding are included in width calculations for perfect alignment */
     .layout, .layout * {
       box-sizing: border-box;
     }
@@ -72,7 +71,6 @@
       overflow: hidden;
       box-shadow: 0 0 5px rgba(135, 206, 250, 0.3);
       width: 100%;
-      /* Match input visual boundary to avoid perceived width differences */
       border: 1px solid #444;
     }
 
@@ -138,6 +136,14 @@
       margin-left: auto;
       margin-right: auto;
       background-color: transparent;
+    }
+
+    /* 🔧 FIX: Constrain message list to same width as inputs/buttons */
+    #outputWrapper,
+    #output {
+      width: 100%;
+      max-width: 500px;
+      margin: 1em auto 0 auto;
     }
 
     #outputWrapper {
