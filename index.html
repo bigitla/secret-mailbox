@@ -190,15 +190,19 @@
 
       const ciphertext = CryptoJS.AES.encrypt(message, keyword).toString();
       const timestamp = new Date().toISOString();
+      const id = crypto.randomUUID();
 
-      await fetch('/mailbox', {
+      const res = await fetch('/mailbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: ciphertext, timestamp })
+        body: JSON.stringify({ id, message: ciphertext, timestamp })
       });
 
-      document.getElementById('messageInput').value = '';
-      loadMessages();
+      if (res.ok) {
+        document.getElementById('messageInput').value = '';
+        await new Promise(resolve => setTimeout(resolve, 300)); // gentle delay
+        loadMessages();
+      }
     }
 
     async function loadMessages() {
@@ -210,8 +214,9 @@
       let decryptedAny = false;
 
       data.slice().reverse().forEach((msgObj) => {
-        const msg = msgObj.message || msgObj;
+        const msg = msgObj.message;
         const time = msgObj.timestamp ? new Date(msgObj.timestamp).toLocaleString() : '🕰️';
+        const id = msgObj.id || '—';
 
         try {
           const bytes = CryptoJS.AES.decrypt(msg, keyword);
@@ -221,7 +226,10 @@
             const firstLine = originalText.split('\n')[0];
             output += `
               <div class="message" onclick="toggleMessage(this)">
-                <span class="timestamp">${time}</span>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="timestamp">${time}</span>
+                  <span style="font-size: 0.8em; color: #aaa;">ID: ${id}</span>
+                </div>
                 <div class="preview">${firstLine}</div>
                 <div class="full">${originalText}</div>
               </div>
