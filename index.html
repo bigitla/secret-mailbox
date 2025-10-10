@@ -132,7 +132,7 @@
     #veil {
       font-style: italic;
       color: #aaa;
-      margin-top: 2em;
+      margin-top: 1em;
       text-align: center;
       animation: pulse 3s ease-in-out infinite;
     }
@@ -146,7 +146,7 @@
       width: 100%;
       max-width: 300px;
       margin-top: 2em;
-      margin-bottom: 2em;
+      margin-bottom: 1em;
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -163,7 +163,6 @@
       }
     }
 
-    /* Messages list inherits same width and sits below veil */
     #outputWrapper {
       max-height: none;
       overflow-y: visible;
@@ -222,7 +221,6 @@
 
     <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
 
-    <!-- Messages list inside .layout for consistent width -->
     <div id="outputWrapper">
       <div id="output"></div>
     </div>
@@ -281,7 +279,7 @@
             `;
           }
         } catch {
-          // silently skip undecryptable messages
+          // skip undecryptable
         }
       });
 
@@ -295,7 +293,6 @@
     function toggleMessage(el) {
       const preview = el.querySelector('.preview');
       const full = el.querySelector('.full');
-
       const isHidden = window.getComputedStyle(full).display === 'none';
 
       if (isHidden) {
