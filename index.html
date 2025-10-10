@@ -42,7 +42,7 @@
     .form-wrapper label,
     .form-wrapper input,
     .form-wrapper textarea,
-    .form-wrapper .split-button {
+    .form-wrapper .button-wrapper {
       width: 100%;
       max-width: 500px;
     }
@@ -58,12 +58,18 @@
     }
 
     textarea {
-    resize: none; /* disables manual resizing */
+      resize: none;
+    }
+
+    .button-wrapper {
+      margin-top: 1em;
+      width: 100%;
+      max-width: 500px;
     }
 
     .split-button {
       display: flex;
-      margin-top: 1em;
+      width: 100%;
       border-radius: 5px;
       overflow: hidden;
       box-shadow: 0 0 5px rgba(135, 206, 250, 0.3);
@@ -179,9 +185,11 @@
     <label for="messageInput" style="margin-top: 2em;">Message:</label>
     <textarea id="messageInput" rows="4"></textarea>
 
-    <div class="split-button">
-      <button onclick="saveToServer()">📩 Drop</button>
-      <button onclick="loadMessages()">📬 Check</button>
+    <div class="button-wrapper">
+      <div class="split-button">
+        <button onclick="saveToServer()">📩 Drop</button>
+        <button onclick="loadMessages()">📬 Check</button>
+      </div>
     </div>
   </div>
 
@@ -274,6 +282,3 @@
   </script>
 </body>
 </html>
-
-
-
