@@ -141,6 +141,17 @@
       display: none;
     }
 
+    /* Elegant copyable ID label */
+    .copy-id {
+      font-size: 0.8em;
+      color: #87CEFA;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .copy-id:hover {
+      color: #ffffff;
+    }
+
     #veil {
       font-style: italic;
       color: #aaa;
@@ -274,7 +285,7 @@
       data.slice().reverse().forEach((msgObj) => {
         const msg = msgObj.message;
         const time = msgObj.timestamp ? new Date(msgObj.timestamp).toLocaleString() : '🕰️';
-        const id = msgObj.id || '—';
+        const id = msgObj.id || '';
 
         try {
           const bytes = CryptoJS.AES.decrypt(msg, keyword);
@@ -284,9 +295,9 @@
             const firstLine = originalText.split('\n')[0];
             output += `
               <div class="message" onclick="toggleMessage(this)">
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                   <span class="timestamp">${time}</span>
-                  <span style="font-size: 0.8em; color: #aaa;">ID: ${id}</span>
+                  <span class="copy-id" onclick="event.stopPropagation(); copyId('${id}')">(ID)</span>
                 </div>
                 <div class="preview">${firstLine}</div>
                 <div class="full">${originalText}</div>
@@ -294,7 +305,7 @@
             `;
           }
         } catch {
-          // skip undecryptable
+          // silently skip undecryptable messages
         }
       });
 
@@ -317,6 +328,15 @@
         preview.style.display = 'block';
         full.style.display = 'none';
       }
+    }
+
+    function copyId(id) {
+      if (!id) return;
+      navigator.clipboard.writeText(id).then(() => {
+        alert("Message ID copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy ID:", err);
+      });
     }
   </script>
 </body>
