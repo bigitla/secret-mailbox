@@ -19,6 +19,7 @@
       position: relative;
       z-index: 0;
 
+      /* Center content on initial load */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -140,6 +141,7 @@
       display: none;
     }
 
+    /* Elegant copyable ID label */
     .copy-id {
       font-size: 0.8em;
       color: #87CEFA;
@@ -153,11 +155,8 @@
     #veil {
       font-style: italic;
       color: #aaa;
+      margin: 1em auto;
       text-align: center;
-      margin: 2em auto 1em auto;
-      max-width: 90%;
-      white-space: normal;
-      overflow: visible;
       animation: pulse 3s ease-in-out infinite;
     }
 
@@ -242,12 +241,12 @@
     </div>
 
     <img src="/squirrel.png" alt="Shequirrel" class="squirrel">
-  </div>
 
-  <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
+    <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
 
-  <div id="outputWrapper">
-    <div id="output"></div>
+    <div id="outputWrapper">
+      <div id="output"></div>
+    </div>
   </div>
 
   <script>
@@ -306,7 +305,7 @@
             `;
           }
         } catch {
-          // skip undecryptable
+          // silently skip undecryptable messages
         }
       });
 
