@@ -157,7 +157,7 @@
       color: #aaa;
       text-align: center;
       margin: 1em 0;
-      white-space: nowrap;      /* force single line */
+      white-space: wrap;      /* force single line */
       overflow: hidden;        /* don't clip */
       text-overflow: clip;
       width: 100vw; /* no ellipsis */
@@ -250,13 +250,12 @@
     </div>
 
     <img src="/squirrel.png" alt="Shequirrel" class="squirrel">
-
+    <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
 
     <div id="outputWrapper">
       <div id="output"></div>
     </div>
   </div>
-    <p id="veil">These words are sealed in silence, waiting for the one who knows the name.</p>
 
   <script>
     async function saveToServer() {
@@ -350,6 +349,7 @@
   </script>
 </body>
 </html>
+
 
 
 
