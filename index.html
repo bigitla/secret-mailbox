@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
   body {
     font-family: 'Open Sans', sans-serif;
@@ -25,214 +25,222 @@
     justify-content: flex-start;
   }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: -1;
-    }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+  }
 
-    .layout, .layout * {
-      box-sizing: border-box;
-    }
+  .layout, .layout * {
+    box-sizing: border-box;
+  }
 
-    .layout {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      max-width: 500px;
-      width: 100%;
-      margin: 1em auto;
-    }
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    margin: 1em auto;
+  }
 
-    h2 {
-      text-align: left;
-      margin-bottom: 1em;
-    }
+  h2 {
+    text-align: left;
+    margin-bottom: 1em;
+  }
 
-    label {
-      margin-top: 1em;
-      text-align: left;
-      width: 100%;
-    }
+  label {
+    margin-top: 1em;
+    text-align: left;
+    width: 100%;
+  }
 
-    input, textarea {
-      margin-top: 0.5em;
-      padding: 0.75em;
-      font-size: 1em;
-      background-color: #111;
-      color: #87CEFA;
-      border: 1px solid #444;
-      border-radius: 5px;
-      width: 100%;
-    }
+  input, textarea {
+    margin-top: 0.5em;
+    padding: 0.75em;
+    font-size: 1em;
+    background-color: #111;
+    color: #87CEFA;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+  }
 
-    textarea {
-      resize: none;
+  textarea {
+    resize: none;
+  }
+
+  .split-button {
+    display: flex;
+    margin-top: 1em;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(135, 206, 250, 0.3);
+    width: 100%;
+    border: 1px solid #444;
+  }
+
+  .split-button button {
+    flex: 1;
+    padding: 0.75em 0;
+    font-size: 1em;
+    background-color: #222;
+    color: #87CEFA;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .split-button button:first-child {
+    border-right: 1px solid #444;
+  }
+
+  .split-button button:hover {
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(135, 206, 250, 0.6);
+    transition: all 0.3s ease;
+  }
+
+  .message {
+    background: #111;
+    color: #87CEFA;
+    padding: 1em;
+    margin-top: 1em;
+    border: 1px solid #444;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: slideIn 0.4s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .timestamp {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    display: block;
+  }
+
+  .preview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .full {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    margin-top: 0.5em;
+    display: none;
+  }
+
+  /* Elegant copyable ID label */
+  .copy-id {
+    font-size: 0.8em;
+    color: #87CEFA;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .copy-id:hover {
+    color: #ffffff;
+  }
+
+  /* VEIL — keep it one single line, centered, without changing layout widths */
+  #veil {
+    font-style: italic;
+    color: #aaa;
+    text-align: center;
+    margin: 1em 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    width: 100vw;
+    max-width: 100%;
+    padding: 0 1em;
+    display: block;
+    box-sizing: border-box;
+    pointer-events: none;
+    font-size: 1em;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  img.squirrel {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: transparent;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards 0.5s;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #outputWrapper {
+    max-height: none;
+    overflow-y: visible;
+    position: relative;
+    margin-top: 2em;
+    width: 100%;
+  }
+
+  #outputWrapper.scrollable {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5em;
+  }
+
+  #outputWrapper.scrollable::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+  }
+
+  @media (max-width: 480px) {
+    body {
+      font-size: 1.1em;
     }
 
     .split-button {
-      display: flex;
-      margin-top: 1em;
-      border-radius: 5px;
-      overflow: hidden;
-      box-shadow: 0 0 5px rgba(135, 206, 250, 0.3);
-      width: 100%;
-      border: 1px solid #444;
+      flex-direction: column;
     }
 
     .split-button button {
-      flex: 1;
-      padding: 0.75em 0;
-      font-size: 1em;
-      background-color: #222;
-      color: #87CEFA;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .split-button button:first-child {
-      border-right: 1px solid #444;
+      border-right: none;
+      border-bottom: 1px solid #444;
     }
+  }
+</style>
 
-    .split-button button:hover {
-      background-color: #333;
-      box-shadow: 0 0 10px rgba(135, 206, 250, 0.6);
-      transition: all 0.3s ease;
-    }
-
-    .message {
-      background: #111;
-      color: #87CEFA;
-      padding: 1em;
-      margin-top: 1em;
-      border: 1px solid #444;
-      border-radius: 5px;
-      cursor: pointer;
-      animation: slideIn 0.4s ease;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .timestamp {
-      margin-bottom: 0.5em;
-      font-weight: bold;
-      display: block;
-    }
-
-    .preview {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .full {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow-wrap: anywhere;
-      margin-top: 0.5em;
-      display: none;
-    }
-
-    /* Elegant copyable ID label */
-    .copy-id {
-      font-size: 0.8em;
-      color: #87CEFA;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .copy-id:hover {
-      color: #ffffff;
-    }
-
-    /* VEIL — keep it one single line, centered, without changing layout widths */
-    #veil {
-      font-style: italic;
-      color: #aaa;
-      text-align: center;
-      margin: 1em 0;
-      white-space: wrap;      /* force single line */
-      overflow: hidden;        /* don't clip */
-      text-overflow: clip;
-      width: 100vw; /* no ellipsis */
-      max-width: 100%;
-      padding: 0 1em;
-      display: block;
-      box-sizing: border-box;
-      pointer-events: none;     /* avoid accidental taps */
-      font-size: 1em;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-
-    img.squirrel {
-      width: 100%;
-      max-width: 300px;
-      margin-top: 2em;
-      margin-bottom: 1em;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      background-color: transparent;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards 0.5s;
-    }
-    
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    #outputWrapper {
-      max-height: none;
-      overflow-y: visible;
-      position: relative;
-      margin-top: 2em;
-      width: 100%;
-    }
-
-    #outputWrapper.scrollable {
-      max-height: 600px;
-      overflow-y: auto;
-      padding-right: 0.5em;
-    }
-
-    #outputWrapper.scrollable::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 40px;
-      background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
-      pointer-events: none;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        font-size: 1.1em;
-      }
-      .split-button {
-        flex-direction: column;
-      }
-      .split-button button:first-child {
-        border-right: none;
-        border-bottom: 1px solid #444;
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="layout">
@@ -349,6 +357,7 @@
   </script>
 </body>
 </html>
+
 
 
 
