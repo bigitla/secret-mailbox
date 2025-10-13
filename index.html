@@ -92,6 +92,7 @@
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    text-align: center;
   }
 
   .split-button button:first-child {
@@ -140,13 +141,13 @@
     display: none;
   }
 
-  /* Elegant copyable ID label */
   .copy-id {
     font-size: 0.8em;
     color: #87CEFA;
     cursor: pointer;
     text-decoration: underline;
   }
+
   .copy-id:hover {
     color: #ffffff;
   }
@@ -157,7 +158,7 @@
     color: #aaa;
     text-align: center;
     margin: 1em 0;
-    white-space: wrap;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: clip;
     width: 100vw;
@@ -225,8 +226,9 @@
       font-size: 1.1em;
     }
 
+    /* No stacking — keep buttons side-by-side */
     .split-button {
-      flex-direction: column;
+      flex-direction: row;
       align-items: stretch;
     }
 
@@ -237,11 +239,12 @@
     }
 
     .split-button button:first-child {
-      border-right: none;
-      border-bottom: 1px solid #444;
+      border-right: 1px solid #444;
+      border-bottom: none;
     }
   }
 </style>
+
 
 </head>
 <body>
@@ -359,6 +362,7 @@
   </script>
 </body>
 </html>
+
 
 
 
